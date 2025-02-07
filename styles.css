@@ -4,6 +4,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     background-color: #FFFAF1;
+    overflow: hidden; /* Disable horizontal and vertical scroll */
 }
 
 header {
@@ -88,7 +89,12 @@ a:hover {
 
 #loaded-image {
     opacity: 1;
-    transition: opacity 2s; /* Ensure smooth transition */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 50%;
+    height: auto;
 }
 
 main {
