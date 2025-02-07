@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FFFAF1;
+}
+
+header {
+    display: flex;
+    font-family: helvetica;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    flex-direction: row; /* Ensure items are in a row */
+    position: relative; /* Ensure header is positioned relative for the line */
+}
+
+.header-content {
+    display: flex;
+    align-items: flex-start;
+}
+
+header h1 {
+    padding-left: 18px; /* Add missing semicolon */
+    text-align: left;
+    font-size: 2vw;
+    color: black; /* Fix color value */
+    font-weight: 500;
+    margin-left: 0; /* Adjust margin */
+    max-width: 40vw; /* Set a max-width to ensure line breaks */
+    white-space: normal; /* Allow text to wrap */
+    line-height: 1;
+}
+
+header h2 {
+    padding-left: 1rem; /* Add missing semicolon */
+    text-align: left;
+    font-size: 1vw;
+    color: black; /* Fix color value */
+    font-weight: 400;
+    margin-left: 16vw; /* Adjust margin */
+    text-transform: uppercase;
+    max-width: 14vw; /* Set a max-width to ensure line breaks */
+    white-space: normal; /* Allow text to wrap */
+}
+
+header h3 {
+    padding-left: 1rem; /* Add missing semicolon */
+    text-align: left;
+    font-size: 1vw;
+    color: black; /* Fix color value */
+    font-weight: 400;
+    margin-left: 16vw; /* Adjust margin */
+    text-transform: uppercase;
+    max-width: 4vw; /* Set a max-width to ensure line breaks */
+    white-space: normal; /* Allow text to wrap */
+}
+
+.header-list {
+    padding-right: 18px; /* Add missing semicolon */
+    text-align: left;
+    font-size: 1vw;
+    color: blue; /* Fix color value */
+    font-weight: 700;
+    margin-left: 16vw; /* Adjust margin */
+    text-transform: uppercase;
+    max-width: 12vw; /* Set a max-width to ensure line breaks */
+    white-space: normal; /* Allow text to wrap */
+}
+
+a {
+    text-decoration: none; /* Remove underline from hyperlinks */
+    color: blue; /* Change color to blue */
+}
+
+a:hover {
+    text-decoration: underline; /* Show underline on hover */
+    text-decoration-thickness: 2pt; /* Set underline thickness to 2pt */
+    color: blue; /* Keep hover color blue */
+}
+
+#current-time {
+    text-decoration: underline; /* Underline the time */
+    text-decoration-thickness: 1pt; /* Set underline thickness to 2pt */
+    color: black; /* Set color to black */
+}
+
+#loaded-image {
+    opacity: 1;
+    transition: opacity 2s; /* Ensure smooth transition */
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+}
+
+footer {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.footer-container {
+    max-width: 1920px;
+    width: 100%;
+    text-align: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.footer-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto; /* Center the image and add margin */
+    padding-bottom: 0;
+    position: absolute;
+    bottom: 0;
+}

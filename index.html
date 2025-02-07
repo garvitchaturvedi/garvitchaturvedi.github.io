@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Garvit<br>Chaturvedi</h1>
+        <h2>I enjoy creating type based identities for Brands, Campaigns and Videos.</h2>
+        <h3>Based in India<br><a href="#" id="current-time" onclick="loadImage()"></a></h3>
+        <ul class="header-list">
+            <ul><a href="https://www.instagram.com/garvit.chaturvedi/">Instagram</a></ul>
+            <ul><a href="https://www.linkedin.com/in/garvitchaturvedi/">LinkedIn</a></ul>
+            <ul><a href="mailto:garvit.chaturvedi1999@gmail.com">Mail</a></ul>
+           
+        </ul>
+    </header>
+    <main>
+        <img id="loaded-image" style="display:none;" src="mmmmm.gif" alt="Loaded Image">
+    </main>
+    <footer>
+        <img src="footer.png" class="footer-image">
+    </footer>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const timeString = `${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        function loadImage() {
+            const image = document.getElementById('loaded-image');
+            image.style.display = 'block';
+            setTimeout(() => {
+                image.style.transition = 'opacity 2s';
+                image.style.opacity = '0';
+            }, 2000);
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display time immediately
+    </script>
+</body>
+</html>
