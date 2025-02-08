@@ -87,7 +87,7 @@ a:hover {
     color: black; /* Set color to black */
 }
 
-#loaded-image {
+#fuggsbunny {
     opacity: 1;
     position: absolute;
     top: 50%;
@@ -95,6 +95,7 @@ a:hover {
     transform: translate(-50%, -60%);
     width: 50%;
     height: auto;
+    z-index: 2;
 }
 
 .centered-image {
@@ -119,6 +120,8 @@ footer {
     align-items: center;
     width: 100%;
     margin: 0;
+    z-index: -1; /* Ensure footer is behind everything */
+    opacity: 0.4; /* Reduce footer opacity to 40% */
 }
 
 .footer-container {
@@ -141,7 +144,14 @@ footer {
 
 .hdfc {
     position: relative;
+    z-index: 1; /* Ensure image grid is above the footer */
 }
+
+.classicreborn {
+    position: relative;
+    z-index: 1; /* Ensure image grid is above the footer */
+}
+
 
 .hdfc-gif {
     position: absolute;
@@ -159,6 +169,7 @@ footer {
 
 .firstcoffee {
     position: relative;
+    z-index: 1; /* Ensure image grid is above the footer */
 }
 
 .firstcoffee-gif {
@@ -177,6 +188,7 @@ footer {
 
 .kvcoolsips {
     position: relative;
+    z-index: 1; /* Ensure image grid is above the footer */
 }
 
 .kvcoolsips-gif {
