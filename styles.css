@@ -54,7 +54,7 @@ header h3 {
     font-weight: 400;
     margin-left: 16vw; /* Adjust margin */
     text-transform: uppercase;
-    max-width: 4vw; /* Set a max-width to ensure line breaks */
+    max-width: 5vw; /* Set a max-width to ensure line breaks */
     white-space: normal; /* Allow text to wrap */
 }
 
@@ -97,6 +97,15 @@ a:hover {
     height: auto;
 }
 
+.centered-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: auto;
+}
+
 main {
     flex: 1;
     padding: 2rem;
@@ -128,4 +137,58 @@ footer {
     padding-bottom: 0;
     position: absolute;
     bottom: 0;
+}
+
+.hdfc {
+    position: relative;
+}
+
+.hdfc-gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: none;
+}
+
+.hdfc:hover .hdfc-gif {
+    display: block;
+}
+
+.firstcoffee {
+    position: relative;
+}
+
+.firstcoffee-gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: none;
+}
+
+.firstcoffee:hover .firstcoffee-gif {
+    display: block;
+}
+
+.kvcoolsips {
+    position: relative;
+}
+
+.kvcoolsips-gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: none;
+}
+
+.kvcoolsips:hover .kvcoolsips-gif {
+    display: block;
 }

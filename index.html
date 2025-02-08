@@ -5,6 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            justify-items: center;
+            align-items: center;
+            padding: 18px; /* Added padding */
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added drop shadow */
+        }
+        .align-start {
+            align-self: start;
+        }
+        .align-center {
+            align-self: center;
+        }
+        .hdfc {
+            align-self: end;
+            position: relative; /* Ensure relative positioning */
+        }
+        .align-stretch {
+            align-self: stretch;
+        }
+        .hdfc-gif {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+        .hdfc:hover .hdfc-gif {
+            display: block;
+        }
+        .firstcoffee-gif {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+        .firstcoffee:hover .firstcoffee-gif {
+            display: block;
+        }
+        .kvcoolsips-gif {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+        .kvcoolsips:hover .kvcoolsips-gif {
+            display: block;
+        }
+        .centered-image {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,8 +89,26 @@
            
         </ul>
     </header>
+    <div id="overlay"></div>
+    <div class="image-grid">
+        <div class="hdfc align-start">
+            <img src="project thumbs/hdfc.png" alt="hdfc">
+            <img src="project thumbs/hdfc.gif" alt="hdfc gif" class="hdfc-gif">
+        </div>
+        <div class="classicreborn align-start">
+            <img src="project thumbs/classicreborn.png" alt="classicreborn">
+        </div>
+        <div class="kvcoolsips align-center">
+            <img src="project thumbs/kvcoolsips.png" alt="kvcoolsips">
+            <img src="project thumbs/kvcoolsips.gif" alt="kvcoolsips gif" class="kvcoolsips-gif">
+        </div>
+        <div class="firstcoffee align-start">
+            <img src="project thumbs/firstcoffee.png" alt="firstcoffee">
+            <img src="project thumbs/firstcoffee.gif" alt="firstcoffee gif" class="firstcoffee-gif">
+        </div>
+    </div>
     <main>
-        <img id="loaded-image" style="display:none;" src="mmmmm.gif" alt="Loaded Image">
+        <img id="fuggsbunny" style="display:none;" src="mmmmm.gif" alt="fuggsbunny" class="centered-image">
     </main>
     <footer>
         <img src="footer.png" class="footer-image">
@@ -36,16 +125,19 @@
         }
 
         function loadImage() {
-            const image = document.getElementById('loaded-image');
+            const image = document.getElementById('fuggsbunny');
+            const overlay = document.getElementById('overlay');
             image.style.display = 'block';
+            overlay.style.display = 'block';
             setTimeout(() => {
                 image.style.display = 'none';
-            }, 2000); // Hide the image after 2 seconds
+                overlay.style.display = 'none';
+            }, 2000); // Hide the image and overlay after 2 seconds
         }
 
         document.getElementById('current-time').addEventListener('click', loadImage);
 
-        document.getElementById('loaded-image').addEventListener('click', function() {
+        document.getElementById('fuggsbunny').addEventListener('click', function() {
             window.open(this.src, '_blank');
         });
 
