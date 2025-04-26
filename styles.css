@@ -1,10 +1,14 @@
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes full viewport height */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #FFFAF1;
-    overflow: hidden; /* Disable horizontal and vertical scroll */
+    overflow-y: auto; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 header {
@@ -25,10 +29,10 @@ header {
 header h1 {
     padding-left: 18px; /* Add missing semicolon */
     text-align: left;
-    font-size: 2vw;
+    font-size: 36px;
     color: black; /* Fix color value */
     font-weight: 500;
-    margin-left: 0; /* Adjust margin */
+    margin-left: 1vw; /* Adjust margin */
     max-width: 40vw; /* Set a max-width to ensure line breaks */
     white-space: normal; /* Allow text to wrap */
     line-height: 1;
@@ -37,10 +41,11 @@ header h1 {
 header h2 {
     padding-left: 1rem; /* Add missing semicolon */
     text-align: left;
-    font-size: 1vw;
+    font-size: 18px;
     color: black; /* Fix color value */
     font-weight: 400;
     margin-left: 16vw; /* Adjust margin */
+    margin-top: 1.5vw;
     text-transform: uppercase;
     max-width: 14vw; /* Set a max-width to ensure line breaks */
     white-space: normal; /* Allow text to wrap */
@@ -49,10 +54,11 @@ header h2 {
 header h3 {
     padding-left: 1rem; /* Add missing semicolon */
     text-align: left;
-    font-size: 1vw;
+    font-size: 18px;
     color: black; /* Fix color value */
     font-weight: 400;
     margin-left: 16vw; /* Adjust margin */
+    margin-top: 1.5vw;
     text-transform: uppercase;
     max-width: 5vw; /* Set a max-width to ensure line breaks */
     white-space: normal; /* Allow text to wrap */
@@ -61,10 +67,12 @@ header h3 {
 .header-list {
     padding-right: 18px; /* Add missing semicolon */
     text-align: left;
-    font-size: 1vw;
+    font-size: 18px;
     color: blue; /* Fix color value */
     font-weight: 700;
     margin-left: 16vw; /* Adjust margin */
+    margin-top: 1.5vw;
+    margin-right: 1vw;
     text-transform: uppercase;
     max-width: 12vw; /* Set a max-width to ensure line breaks */
     white-space: normal; /* Allow text to wrap */
@@ -108,7 +116,7 @@ a:hover {
 }
 
 main {
-    flex: 1;
+    flex: 1; /* Allow main content to grow and take available space */
     padding: 2rem;
 }
 
@@ -122,6 +130,17 @@ footer {
     margin: 0;
     z-index: -1; /* Ensure footer is behind everything */
     opacity: 0.4; /* Reduce footer opacity to 40% */
+    position: relative; /* Ensure footer is positioned relative */
+    bottom: 0; /* Position footer at the bottom */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: black; /* Fix color value */
+    text-align: fill;
+    font-family:Helvetica, sans-serif;
+    font-size: clamp(12px, 20vw, 144px);
 }
 
 .footer-container {
@@ -142,16 +161,47 @@ footer {
     bottom: 0;
 }
 
+.image-grid p {
+    margin: 20px 0;
+    font-size: 14px;
+    color: black; /* Fix color value */
+    text-align: fill;
+    font-family: Helvetica, sans-serif;
+    font-size: clamp(12px, 20vw, 16px);
+}
+
+/* Make the image grid responsive */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Set a maximum of 3 columns */
+    gap: 16px; /* Space between grid items */
+    padding: 16px; /* Add padding around the grid */
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add drop shadow */
+}
+
+.align-start {
+    align-self: start;
+}
+
+.align-center {
+    align-self: center;
+}
+
+.align-stretch {
+    align-self: stretch;
+}
+
 .hdfc {
-    position: relative;
+    align-self: start;
+    position: relative; /* Ensure relative positioning */
     z-index: 1; /* Ensure image grid is above the footer */
 }
-
-.classicreborn {
-    position: relative;
-    z-index: 1; /* Ensure image grid is above the footer */
-}
-
 
 .hdfc-gif {
     position: absolute;
@@ -165,6 +215,11 @@ footer {
 
 .hdfc:hover .hdfc-gif {
     display: block;
+}
+
+.classicreborn {
+    position: relative;
+    z-index: 1; /* Ensure image grid is above the footer */
 }
 
 .firstcoffee {
@@ -203,4 +258,145 @@ footer {
 
 .kvcoolsips:hover .kvcoolsips-gif {
     display: block;
+}
+
+@media (max-width: 1024) {
+    body {
+        overflow: auto; /* Allow scrolling for small viewports */
+    }
+    header {
+        padding: 0;
+    }
+
+    header h1 {
+        font-size: 42px; /* Adjust font size for small viewports */
+    }
+
+    header h2 {
+        font-size: 21px; /* Adjust font size for small viewports */
+        max-width: 25ch;
+        margin-left: 8px;
+    }
+
+    header h3 {
+        font-size: 21vw; /* Adjust font size for small viewports */
+        max-width: 12ch;
+        margin-left: 18px;
+    }
+
+    .header-list {
+        font-size: 21vw; /* Adjust font size for small viewports */
+        margin-left: 8px; /* Adjust margin for small viewports */
+        max-width: 10ch;
+        margin-right: 36px; /* Add space of 18px on the right */
+        text-align: left; /* Move header list to the left */
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr; /* Single column layout for small viewports */
+        gap: 5px; /* Reduce gap for small viewports */
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: auto;
+    }
+
+    footer {
+        padding: 0.5rem; /* Adjust padding for small viewports */
+    }
+}
+@media (max-width: 767px) {
+    body {
+        overflow: auto; /* Allow scrolling for small viewports */
+    }
+    header {
+        padding: 0;
+    }
+
+    header h1 {
+        font-size: 28px; /* Adjust font size for small viewports */
+        align-items:start;
+    }
+
+    header h2 {
+        font-size: 14px; /* Adjust font size for small viewports */
+        max-width: 25ch;
+        margin-left: 3vw;
+    }
+
+    header h3 {
+        font-size: 14px; /* Adjust font size for small viewports */
+        max-width: 18ch;
+        margin-left: 3vw;
+    }
+
+    .header-list {
+        font-size: 14px; /* Adjust font size for small viewports */
+        margin-left: 8px; /* Adjust margin for small viewports */
+        max-width: 10ch;
+        margin-right: 36px; /* Add space of 18px on the right */
+        text-align: left; /* Move header list to the left */
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr; /* Single column layout for small viewports */
+        gap: 5px; /* Reduce gap for small viewports */
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: auto;
+    }
+
+    footer {
+        padding: 0.5rem; /* Adjust padding for small viewports */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        overflow: auto; /* Allow scrolling for small viewports */
+    }
+    header {
+        padding: 0;
+    }
+
+    header h1 {
+        font-size: 14px; /* Adjust font size for small viewports */
+    }
+
+    header h2 {
+        font-size: 8px; /* Adjust font size for small viewports */
+        max-width: 25ch;
+        margin-left: 3vw;
+    }
+
+    header h3 {
+        font-size: 8px; /* Adjust font size for small viewports */
+        max-width: 12ch;
+        margin-left: 12px;
+    }
+
+    .header-list {
+        font-size: 8px; /* Adjust font size for small viewports */
+        margin-left: 8px; /* Adjust margin for small viewports */
+        max-width: 10ch;
+        margin-right: 36px; /* Add space of 18px on the right */
+        text-align: left; /* Move header list to the left */
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr; /* Single column layout for small viewports */
+        gap: 5px; /* Reduce gap for small viewports */
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: auto;
+    }
+
+    footer {
+        padding: 0.5rem; /* Adjust padding for small viewports */
+    }
 }
