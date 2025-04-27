@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <style>
+        @font-face {
+            font-family: 'Redaction';
+            src: url('fonts/Redaction-Italic.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Redaction10';
+            src: url('fonts/Redaction_10-Italic.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Redaction20';
+            src: url('fonts/Redaction_20-Italic.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Redaction50';
+            src: url('fonts/Redaction_50-Italic.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Redaction100';
+            src: url('fonts/Redaction_100-Italic.woff2') format('woff2');
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            font-family: 'Redaction';
+            font-style: italic;
+            font-size: 160px;
+        }
+        span {
+            transition: all 0.3s ease;
+        }
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: system-ui;
+            font-style: normal;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 260px;
+            max-width: calc(100vw - 40px);
+            box-sizing: border-box;
+        }
+        
+        .controls input {
+            padding: 5px;
+            margin-top: 5px;
+            width: 100%;
+            font-family: system-ui;
+            box-sizing: border-box;
+        }
+        .controls label {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        .controls label:first-child {
+            margin-top: 0;
+        }
+        .controls input[type="range"] {
+            width: 100%;
+        }
+        .value-display {
+            display: inline;
+            color: #0066ff;
+            margin-left: 5px;
+            font-family: system-ui;
+            font-weight: 500;
+        }
+        .text-container {
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            position: relative;
+            padding: 32px;
+        }
+        .text-container span {
+            position: relative;
+            display: inline-block;
+        }
+        .color-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .add-color, .remove-color {
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+        }
+        .add-color {
+            background: #0066ff;
+        }
+        .remove-color {
+            background: #ff4444;
+        }
+        .download-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: system-ui;
+            transition: opacity 0.2s;
+        }
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+    </style>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.4.5/gifshot.min.js"></script>
+</head>
+<body>
+    <div class="controls">
+        <label>Change Text:</label>
+        <input type="text" id="text-input" value="Coming Soon">
+        <label>Animation Speed: <span class="value-display" id="speed-value">200ms</span></label>
+        <input type="range" id="speed-control" min="20" max="800" value="200">
+        <label>Animation Seed: <span class="value-display" id="seed-value">1</span></label>
+        <input type="range" id="seed-control" min="1" max="100" value="1">
+        <label>Font Weight: <span class="value-display" id="weight-value">100</span></label>
+        <input type="range" id="weight-control" min="10" max="100" step="10" value="100">
+        <label>Reset Delay: <span class="value-display" id="reset-value">3s</span></label>
+        <input type="range" id="reset-control" min="1" max="5" value="3">
+        <label>Color Seed: <span class="value-display" id="color-seed-value">0</span></label>
+        <input type="range" id="color-seed-control" min="0" max="100" value="0">
+        <label>Text Colors:</label>
+        <div id="color-inputs">
+            <div class="color-group">
+                <input type="color" class="color-control" value="#000000" style="width: calc(100% - 70px);">
+                <button class="remove-color" onclick="removeColorInput(this)">-</button>
+                <button class="add-color" onclick="addColorInput()">+</button>
+            </div>
+        </div>
+        <button class="download-btn" id="download-btn">Download GIF</button>
+    </div>
+    <div class="text-container">
+        <span>C</span><span>o</span><span>m</span><span>i</span><span>n</span><span>g</span>
+        <span>S</span><span>o</span><span>o</span><span>n</span>
+    </div>
+    <script>
+        let spans = document.querySelectorAll('.text-container span');
+        let delay = 200;
+        let seed = 1;
+        let isWaveMode = true;
+        const textInput = document.getElementById('text-input');
+        const speedControl = document.getElementById('speed-control');
+        const speedValue = document.getElementById('speed-value');
+        const seedControl = document.getElementById('seed-control');
+        const seedValue = document.getElementById('seed-value');
+        const weightControl = document.getElementById('weight-control');
+        const weightValue = document.getElementById('weight-value');
+        let currentWeight = 100;
+
+        // Remove colorControl reference and its event listener
+        // Add color state variable
+        let currentColors = ['#000000'];
+        let resetDelay = 3000;
+        
+        // Add vibrant color palette
+        const vibrantColors = [
+            '#FF0080', // Hot Pink
+            '#00FF00', // Lime
+            '#00FFFF', // Cyan
+            '#FF6B6B', // Coral
+            '#4D4DFF', // Blue
+            '#FFA500', // Orange
+            '#9D00FF', // Purple
+            '#00FF9D', // Spring Green
+            '#FF2D55', // Red
+            '#40E0D0'  // Turquoise
+        ];
+
+        function getRandomVibrantColor() {
+            return vibrantColors[Math.floor(Math.random() * vibrantColors.length)];
+        }
+
+        const resetControl = document.getElementById('reset-control');
+        const resetValue = document.getElementById('reset-value');
+
+        speedControl.addEventListener('input', (e) => {
+            delay = parseInt(e.target.value);
+            speedValue.textContent = `${delay}ms`;
+        });
+
+        seedControl.addEventListener('input', (e) => {
+            seed = parseInt(e.target.value);
+            seedValue.textContent = seed;
+            isWaveMode = false;
+        });
+
+        weightControl.addEventListener('input', (e) => {
+            currentWeight = parseInt(e.target.value);
+            weightValue.textContent = currentWeight;
+        });
+
+        resetControl.addEventListener('input', (e) => {
+            resetDelay = parseInt(e.target.value) * 1000;
+            resetValue.textContent = `${e.target.value}s`;
+            // Clear existing interval and start new one
+            clearInterval(animationInterval);
+            animationInterval = setInterval(animateWave, resetDelay);
+        });
+
+        function animateWave() {
+            const getFontWeight = () => {
+                if (currentWeight > 10 && currentWeight <= 20) return 20;
+                else if (currentWeight > 20 && currentWeight <= 50) return 50;
+                else if (currentWeight > 50) return 100;
+                return 10;
+            };
+
+            const fontWeight = getFontWeight();
+            weightValue.textContent = fontWeight.toString();
+
+            if (isWaveMode) {
+                spans.forEach((span, index) => {
+                    setTimeout(() => {
+                        span.style.fontFamily = `Redaction${fontWeight}`;
+                        // Add color animation
+                        if (currentColors.length > 0) {
+                            const colorIndex = index % currentColors.length;
+                            span.style.color = currentColors[colorIndex];
+                        }
+                        setTimeout(() => {
+                            span.style.fontFamily = 'Redaction';
+                            span.style.color = currentColors[0]; // Reset to first color
+                        }, 300);
+                    }, index * delay);
+                });
+            } else {
+                spans.forEach((span, index) => {
+                    const randomDelay = ((index * seed) % spans.length) * delay;
+                    setTimeout(() => {
+                        span.style.fontFamily = `Redaction${fontWeight}`;
+                        // Add seeded color animation
+                        if (currentColors.length > 0) {
+                            const colorIndex = (index * seed) % currentColors.length;
+                            span.style.color = currentColors[colorIndex];
+                        }
+                        setTimeout(() => {
+                            span.style.fontFamily = 'Redaction';
+                            span.style.color = currentColors[0]; // Reset to first color
+                        }, 300);
+                    }, randomDelay);
+                });
+            }
+        }
+
+        function updateText(text) {
+            const container = document.querySelector('.text-container');
+            container.innerHTML = text.split('').map(char => 
+                `<span>${char}</span>`
+            ).join('');
+            spans = document.querySelectorAll('.text-container span');
+        }
+
+        textInput.addEventListener('input', (e) => {
+            updateText(e.target.value);
+        });
+
+        function addColorInput() {
+            const randomColor = getRandomVibrantColor();
+            const colorInputs = document.getElementById('color-inputs');
+            const newGroup = document.createElement('div');
+            newGroup.className = 'color-group';
+            newGroup.innerHTML = `
+                <input type="color" class="color-control" value="${randomColor}" style="width: calc(100% - 70px);">
+                <button class="remove-color" onclick="removeColorInput(this)">-</button>
+                <button class="add-color" onclick="addColorInput()">+</button>
+            `;
+            colorInputs.appendChild(newGroup);
+            updateColorControls();
+            updateColorListeners();
+        }
+
+        function removeColorInput(button) {
+            const colorInputs = document.getElementById('color-inputs');
+            if (colorInputs.children.length > 1) {
+                button.parentElement.remove();
+                updateColorControls();
+                updateColorListeners();
+            }
+        }
+
+        function updateColorControls() {
+            const groups = document.getElementsByClassName('color-group');
+            // Show add button only on last group
+            Array.from(groups).forEach((group, index) => {
+                const addBtn = group.querySelector('.add-color');
+                if (addBtn) {
+                    addBtn.style.display = (index === groups.length - 1) ? 'block' : 'none';
+                }
+            });
+        }
+
+        function updateColorListeners() {
+            const colorInputs = document.querySelectorAll('.color-control');
+            currentColors = Array.from(colorInputs).map(input => input.value);
+            
+            colorInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    currentColors[index] = e.target.value;
+                    spans.forEach((span, spanIndex) => {
+                        span.style.color = currentColors[spanIndex % currentColors.length];
+                    });
+                });
+            });
+        }
+
+        updateColorListeners();
+
+        // Store interval reference so we can clear it
+        let animationInterval = setInterval(animateWave, resetDelay);
+        // Start first animation
+        animateWave();
+
+        let colorSeedInterval;
+        const colorSeedControl = document.getElementById('color-seed-control');
+        const colorSeedValue = document.getElementById('color-seed-value');
+
+        colorSeedControl.addEventListener('input', (e) => {
+            const seedValue = parseInt(e.target.value);
+            colorSeedValue.textContent = seedValue;
+            
+            if (seedValue === 0) {
+                clearInterval(colorSeedInterval);
+                // Reset to original color arrangement
+                spans.forEach((span, spanIndex) => {
+                    span.style.color = currentColors[spanIndex % currentColors.length];
+                });
+            } else {
+                clearInterval(colorSeedInterval);
+                colorSeedInterval = setInterval(() => {
+                    spans.forEach((span, spanIndex) => {
+                        const randomIndex = (spanIndex * seedValue) % currentColors.length;
+                        span.style.color = currentColors[randomIndex];
+                    });
+                }, 300);
+            }
+        });
+
+        document.getElementById('download-btn').addEventListener('click', async function() {
+            const button = this;
+            button.disabled = true;
+            button.textContent = 'Capturing...';
+
+            try {
+                const container = document.querySelector('.text-container');
+                const frames = [];
+                const frameCount = 20; // More frames for smoother animation
+                
+                // Start a fresh animation cycle
+                animateWave();
+                
+                // Capture frames
+                for (let i = 0; i < frameCount; i++) {
+                    await new Promise(resolve => setTimeout(resolve, delay / 2));
+                    const canvas = await html2canvas(container, {
+                        backgroundColor: null,
+                        scale: 2,
+                        logging: false
+                    });
+                    frames.push(canvas.toDataURL());
+                }
+
+                button.textContent = 'Creating GIF...';
+                gifshot.createGIF({
+                    images: frames,
+                    gifWidth: container.offsetWidth * 2,
+                    gifHeight: container.offsetHeight * 2,
+                    interval: delay / 1000,
+                    numFrames: frameCount,
+                    frameDuration: 1,
+                    transparent: 'ffffff',
+                    crossOrigin: 'Anonymous'
+                }, function(obj) {
+                    if(!obj.error) {
+                        const link = document.createElement('a');
+                        link.href = obj.image;
+                        link.download = 'animation.gif';
+                        link.click();
+                        button.textContent = 'Download GIF';
+                    } else {
+                        console.error('GIF creation error:', obj.error);
+                        button.textContent = 'Try Again';
+                    }
+                    button.disabled = false;
+                });
+            } catch (error) {
+                console.error('Capture error:', error);
+                button.textContent = 'Try Again';
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

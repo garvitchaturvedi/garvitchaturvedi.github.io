@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDFC Sky</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <h1>Garvit<br>Chaturvedi</h1>
+        <h2>I enjoy creating type based identities for Brands, Campaigns and Videos.</h2>
+        <h3>Based in India<br><a href="#" id="current-time" onclick="loadImage()"></a></h3>
+        <ul class="header-list">
+            <ul><a href="https://www.instagram.com/garvit.chaturvedi/">Instagram</a></ul>
+            <ul><a href="https://www.linkedin.com/in/garvitchaturvedi/">LinkedIn</a></ul>
+            <ul><a href="mailto:garvit.chaturvedi1999@gmail.com">Mail</a></ul>
+        </ul>
+    </header>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const timeString = `${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
